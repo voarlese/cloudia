@@ -23,7 +23,6 @@ use cloudia;
 create table card(
    card_no BIGINT,
    name VARCHAR(20),
-   img_Name CHAR(10),
    level_No BIGINT,
    type_No BIGINT,
    PRIMARY KEY ( card_no )
@@ -32,7 +31,6 @@ create table card(
 | 型態 | 名稱 |
 | ------------- | ------------- |
 | long | card_no |
-|char(10)|img_name|
 | varcher | name |
 | int | level_no |
 | int | type_no |
