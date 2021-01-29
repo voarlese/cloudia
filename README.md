@@ -1,24 +1,24 @@
-#Cloudia
+# Cloudia
 
-#####建立資料表
+##### 建立資料表
 ```sql
 create database cloudia;
 ```
 
-#####支援UTF-8
+##### 支援UTF-8
 ```sql
 alter database cloudia character set UTF8;
 ```
 
-#####選擇資料庫
+##### 選擇資料庫
 ```sql
 use cloudia;
 ```
-#####表格規劃
+##### 表格規劃
 * 每次啟動時編號 用於區分每次auto
 * 單次抽卡紀錄 (抽到哪幾張、LEVEL統計)
 
-######卡片資料
+###### 卡片資料
 ```mysql
 create table card(
    card_no BIGINT,
@@ -37,7 +37,7 @@ create table card(
 | int | level_no |
 | int | type_no |
 ---
-######等級表
+###### 等級表
 ```mysql
 create table cardLevel(
    level_no BIGINT PRIMARY KEY,
@@ -50,7 +50,7 @@ create table cardLevel(
 | int | level_no |
 | char(4) | level_name |
 ---
-######卡片類別表
+###### 卡片類別表
 ```mysql
 create table cardType(
    type_no bigint PRIMARY KEY,
@@ -62,7 +62,7 @@ create table cardType(
 | int | typeNo |
 | char(4) | typeName |
 ---
-######單次(pick)抽卡表
+###### 單次(pick)抽卡表
 ```mysql
 create table pick(
    pick_no BIGINT PRIMARY KEY,
@@ -78,7 +78,7 @@ create table pick(
 | bigint | card_no |
 | timestamp | time |
 ---
-######訂單(auto)表
+###### 訂單(auto)表
 ```mysql
 create table autoOrder(
    order_no BIGINT PRIMARY KEY,
@@ -90,7 +90,7 @@ create table autoOrder(
 | long | order_no |
 | DATETIME | order_time |
 ---
-######卡片圖片表
+###### 卡片圖片表
 ```mysql
 create table cardImage(
    id int auto_increment PRIMARY KEY,
@@ -119,19 +119,19 @@ create table cardImage(
 ```sql
 select count(A.pick_count) from (select pick_no, count(pick_no) as pick_count, order_no from PICK where order_no = '1611649909449' group by pick_no) as A;
 ```
-####查詢 每個pick 包含多少個 3 聖物 
+#### 查詢 每個pick 包含多少個 3 聖物 
 ```sql
 select C.pick_no, count(C.pick_no), C.pick_time from (select A.pick_no, A.pick_time, B.name, B.card_no from PICK as A inner join CARD as B on A.card_no = B.card_no where A.order_no = '1610817121701' and (B.card_no = '26' or B.card_no ='17' or B.card_no = '4')) as C group by C.pick_no;
 ```
-####查詢全部SSR每十抽出現次數
+#### 查詢全部SSR每十抽出現次數
 ```sql
 select C.pick_no, count(C.pick_no) from (select A.*, B.name, B.img_name from PICK as A inner join CARD as B on A.card_no = B.card_no where A.order_no = '1610817121701' and B.card_no in('4', '9', '17', '26', '31', '38', '41', '55', '60')) as C group by C.pick_no;
 ```
-####查詢指定ORDER 每次十抽SSR出現次數
+#### 查詢指定ORDER 每次十抽SSR出現次數
 ```sql
 select C.pick_no, count(C.pick_no) from (select A.*, B.name from PICK as A inner join CARD as B on A.card_no = B.card_no where A.order_no = '1611721712574' and B.card_no in('4', '9', '17', '26', '31', '38', '41', '55', '60')) as C group by C.pick_no;
 ```
-####單次ORDER 每次十抽 判斷出來卡片數量
+#### 單次ORDER 每次十抽 判斷出來卡片數量
 ```sql
 select A.pick_count, A.pick_no from (select pick_no, count(pick_no) as pick_count, order_no from PICK where order_no = '1611721712574' group by pick_no) as A;
 ```
