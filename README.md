@@ -1,7 +1,7 @@
 # Cloudia
  
 ## 自動抽卡機率統計
-[![](./summary.png)
+[![](./summary.png)]
  
 ##### 直接還原
 把 cloudia.sql 抓下來還原就好了
